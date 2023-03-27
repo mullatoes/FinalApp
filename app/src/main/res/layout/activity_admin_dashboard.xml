@@ -11,18 +11,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="10dp"
         android:text="Welcome Admin!"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/buttonUploadItemAdmin"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewWelcome"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
         android:text="Upload Item" />
+
+
+    <Button
+        android:id="@+id/buttonLoadItemsAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonUploadItemAdmin"
+        android:layout_centerHorizontal="true"
+        android:text="Load Items" />
+
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonLoadItemsAdmin"
+        android:layout_centerHorizontal="true"
+        android:text="Log out" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_admin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonLogout"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

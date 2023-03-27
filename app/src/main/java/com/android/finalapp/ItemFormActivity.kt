@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.android.finalapp.data.AppDatabase
 import com.android.finalapp.model.Item
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ItemFormActivity : AppCompatActivity() {
 
@@ -15,6 +19,7 @@ class ItemFormActivity : AppCompatActivity() {
     private lateinit var editTextItemDescription: EditText
     private lateinit var buttonSubmit: Button
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_form)
@@ -30,13 +35,24 @@ class ItemFormActivity : AppCompatActivity() {
             val itemPrice = editTextItemPrice.text.toString().toDouble()
             val itemDescription = editTextItemDescription.text.toString()
 
-            // Return the values to the calling activity
-            val intent = Intent()
-            intent.putExtra("itemName", itemName)
-            intent.putExtra("itemPrice", itemPrice)
-            intent.putExtra("itemDescription", itemDescription)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            val item = Item(
+                itemName = itemName,
+                itemPrice = itemPrice,
+                itemDescription = itemDescription
+            )
+
+            val itemDao = AppDatabase.getInstance(this).itemDao()
+            GlobalScope.launch {
+                itemDao.insert(item)
+            }
+
+            editTextItemName.text.clear()
+            editTextItemDescription.text.clear()
+            editTextItemPrice.text.clear()
+
+            val intent = Intent(this, AdminDashboardActivity::class.java)
+            startActivity(intent)
+
         }
 
     }
