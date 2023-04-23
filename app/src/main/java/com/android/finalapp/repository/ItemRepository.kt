@@ -6,8 +6,10 @@ import com.android.finalapp.model.Item
 class ItemRepository(
     private val itemDao: ItemDao
 ) {
-    suspend fun getAllItems(): List<Item> {
+    fun getAllItems(): List<Item> {
         return itemDao.getAllItems()
     }
+
+    suspend fun getItemById(id: Int): Item? = itemDao.getItemById(id)
 
 }

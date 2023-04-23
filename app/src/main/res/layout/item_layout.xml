@@ -5,8 +5,15 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/itemImageRetrieved"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:src="@drawable/product_24" />
+
     <TextView
         android:id="@+id/itemName"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
@@ -14,21 +21,40 @@
 
     <TextView
         android:id="@+id/itemPrice"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp" />
 
     <TextView
         android:id="@+id/itemDescription"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp" />
 
     <TextView
+        android:layout_marginTop="8dp"
         android:id="@+id/redeemTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/itemRatingBar"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="0.0"
+        android:stepSize="0.5" />
+
+    <TextView
+        android:id="@+id/itemCommentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Comment here"
+        android:inputType="text" />
 </LinearLayout>

@@ -8,11 +8,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "items")
 data class Item(
-    @PrimaryKey(
-        autoGenerate = true
-    )
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val itemName: String,
     val itemPrice: Double,
-    val itemDescription: String
+    val itemDescription: String,
+    val imageUri: String?
 ): Parcelable

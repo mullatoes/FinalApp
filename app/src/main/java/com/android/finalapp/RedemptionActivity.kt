@@ -40,7 +40,7 @@ class RedemptionActivity : AppCompatActivity() {
             val items = viewModel.getAllItems()
             lifecycleScope.launch(Dispatchers.Main) {
                 initRecyclerView()
-                recyclerView.adapter = ItemListAdapter(items)
+                recyclerView.adapter = ItemListAdapter(items, AppDatabase.getInstance(applicationContext).itemDao())
             }
         }
     }

@@ -70,7 +70,7 @@ class AdminDashboardActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
 
-                val adapter = ItemListAdapter(itemList)
+                val adapter = ItemListAdapter(itemList, itemDao = AppDatabase.getInstance(applicationContext).itemDao() )
                 recyclerView.layoutManager = LinearLayoutManager(this@AdminDashboardActivity)
                 recyclerView.adapter = adapter
             }

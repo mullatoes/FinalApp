@@ -43,6 +43,14 @@
             android:text="Item Description"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/btnRedeem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Redeem"
+            />
+
 
     </LinearLayout>
 

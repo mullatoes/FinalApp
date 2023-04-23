@@ -8,38 +8,42 @@
 
     <EditText
         android:id="@+id/editTextItemName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="89dp"
+        android:layout_marginTop="100dp"
         android:ems="10"
         android:hint="Item Name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/item_image" />
 
     <EditText
         android:id="@+id/editTextItemPrice"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Item Price"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextItemName"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextItemName"
         app:layout_constraintTop_toBottomOf="@+id/editTextItemName" />
 
     <EditText
         android:id="@+id/editTextItemDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="4dp"
         android:ems="10"
         android:hint="Item desc"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/editTextItemPrice"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextItemPrice" />
 
     <Button
@@ -51,4 +55,17 @@
         android:text="Submit Item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextItemDescription" />
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/product_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
