@@ -1,19 +1,32 @@
 package com.android.finalapp.account
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
+import com.android.finalapp.AdminDashboardActivity
 import com.android.finalapp.R
+import com.android.finalapp.RedemptionActivity
+import com.android.finalapp.account.entities.Admin
+import com.android.finalapp.account.entities.User
+import com.android.finalapp.data.AccountDao
+import com.android.finalapp.data.AppDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CreateAccountActivity : AppCompatActivity() {
 
     private lateinit var createAccountButton: Button
     private lateinit var emailEt: EditText
-    private lateinit var passEt:EditText
+    private lateinit var passEt: EditText
     private lateinit var adminRadioBtn: RadioButton
     private lateinit var userRadioBtn: RadioButton
+
+    private lateinit var accountDao: AccountDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +38,7 @@ class CreateAccountActivity : AppCompatActivity() {
         adminRadioBtn = findViewById(R.id.admin_radio_button)
         userRadioBtn = findViewById(R.id.user_radio_button)
 
-        accountDao = AccountDatabase.getInstance(this).accountDao()
+        accountDao = AppDatabase.getInstance(this).accountDao()
 
         createAccountButton.setOnClickListener {
             val email = emailEt.text.toString()
@@ -37,11 +50,30 @@ class CreateAccountActivity : AppCompatActivity() {
 
             // Create the account based on the selected type
             if (isAdmin) {
-                //get the email and paswword and send this to database
+                //get the email and password and send this to database
+                val admin = Admin(email, password)
+                GlobalScope.launch(Dispatchers.IO) {
+                    accountDao.insertAdmin(admin)
 
+                    // Redirect the admin to the admin dashboard
+                    withContext(Dispatchers.Main) {
+                        startActivity(Intent(this@CreateAccountActivity, AdminDashboardActivity::class.java))
+                        finish() // Finish the current activity to prevent going back
+                    }
+                }
             }
-            if (isUser){
 
+            if (isUser) {
+                // Create a user account
+                val user = User(email, password)
+                GlobalScope.launch(Dispatchers.IO) {
+                    accountDao.insertUser(user)
+
+                    withContext(Dispatchers.Main) {
+                        startActivity(Intent(this@CreateAccountActivity, RedemptionActivity::class.java))
+                        finish() // Finish the current activity to prevent going back
+                    }
+                }
             }
         }
 

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.finalapp.account.UniversalLoginActivity
 import com.android.finalapp.adapter.ItemListAdapter
 import com.android.finalapp.data.AppDatabase
 import com.android.finalapp.data.SampleData
@@ -54,7 +55,7 @@ class AdminDashboardActivity : AppCompatActivity() {
         }
 
         buttonLogOut.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, UniversalLoginActivity::class.java)
             startActivity(intent)
         }
     }

@@ -1,5 +1,6 @@
 package com.android.finalapp.account
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -18,11 +19,14 @@ class WelcomeActivity : AppCompatActivity() {
         createAccountBtn = findViewById(R.id.btn_create_account_welcome)
 
         loginBtn.setOnClickListener {
-
+            val intent = Intent(this, UniversalLoginActivity::class.java)
+            startActivity(intent)
         }
 
         createAccountBtn.setOnClickListener {
-
+            val intent = Intent(this, CreateAccountActivity::class.java)
+            startActivity(intent)
         }
+
     }
 }
