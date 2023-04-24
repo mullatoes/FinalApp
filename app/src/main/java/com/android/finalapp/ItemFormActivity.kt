@@ -9,8 +9,11 @@ import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.android.finalapp.data.AppDatabase
 import com.android.finalapp.model.Item
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,6 +42,14 @@ class ItemFormActivity : AppCompatActivity() {
         buttonSubmit = findViewById(R.id.buttonSubmit)
         itemImage = findViewById(R.id.item_image)
 
+        // Get a reference to the Firestore database
+        val db = Firebase.firestore
+        // Get a reference to the "items" collection
+        val itemsCollection = db.collection("items")
+
+        // Create a new document in the "items" collection with a unique ID
+        val newItemRef = itemsCollection.document()
+
         itemImage.setOnClickListener {
             // Open the gallery to pick an image
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -58,11 +69,27 @@ class ItemFormActivity : AppCompatActivity() {
                 imageUri = selectedImageUri!!.toString()
 
             )
+            // Set the data of the document to the item object
+            newItemRef.set(item)
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        this,
+                        "Item added successfully", Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        this,
+                        "Error adding items ${it.localizedMessage}", Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
 
-            val itemDao = AppDatabase.getInstance(this).itemDao()
-            GlobalScope.launch {
-                itemDao.insert(item)
-            }
+//            val itemDao = AppDatabase.getInstance(this).itemDao()
+//            GlobalScope.launch {
+//                itemDao.insert(item)
+//            }
 
             editTextItemName.text.clear()
             editTextItemDescription.text.clear()

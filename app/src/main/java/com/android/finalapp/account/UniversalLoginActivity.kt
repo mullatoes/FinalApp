@@ -11,6 +11,7 @@ import com.android.finalapp.AdminDashboardActivity
 import com.android.finalapp.R
 import com.android.finalapp.RedemptionActivity
 import com.android.finalapp.data.AccountDao
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ class UniversalLoginActivity : AppCompatActivity() {
     private lateinit var isUserRb: RadioButton
     private lateinit var loginButton: Button
     private lateinit var accountDao: AccountDao
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,8 @@ class UniversalLoginActivity : AppCompatActivity() {
         isUserRb = findViewById(R.id.user_radio_button_universalLogin)
         loginButton = findViewById(R.id.login_button_universalLogin)
 
+        mAuth = FirebaseAuth.getInstance()
+
         loginButton.setOnClickListener {
             val email = emailEt.text.toString()
             val password = passEt.text.toString()
@@ -43,10 +47,10 @@ class UniversalLoginActivity : AppCompatActivity() {
             val isAdmin = isAdminRb.isChecked
 
             if (isAdmin) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    val admin = accountDao.getAdminByEmailAndPassword(email, password)
-                    withContext(Dispatchers.Main) {
-                        if (admin != null) {
+
+                mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
                             // Redirect the admin to the admin dashboard
                             startActivity(
                                 Intent(
@@ -54,23 +58,42 @@ class UniversalLoginActivity : AppCompatActivity() {
                                     AdminDashboardActivity::class.java
                                 )
                             )
-                            finish() // Finish the current activity to prevent going back
-                        } else {
-                            // Display an error message if the admin credentials are invalid
-                            Toast.makeText(
-                                this@UniversalLoginActivity,
-                                "Invalid credentials",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            finish()
                         }
+                    }.addOnFailureListener {
+                        Toast.makeText(
+                            this, "Sign In Failed $it",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
-                }
+//                GlobalScope.launch(Dispatchers.IO) {
+//                    val admin = accountDao.getAdminByEmailAndPassword(email, password)
+//                    withContext(Dispatchers.Main) {
+//                        if (admin != null) {
+//                            // Redirect the admin to the admin dashboard
+//                            startActivity(
+//                                Intent(
+//                                    this@UniversalLoginActivity,
+//                                    AdminDashboardActivity::class.java
+//                                )
+//                            )
+//                            finish() // Finish the current activity to prevent going back
+//                        } else {
+//                            // Display an error message if the admin credentials are invalid
+//                            Toast.makeText(
+//                                this@UniversalLoginActivity,
+//                                "Invalid credentials",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    }
+//                }
             } else {
-                GlobalScope.launch(Dispatchers.IO) {
-                    val user = accountDao.getUserByEmailAndPassword(email, password)
-                    withContext(Dispatchers.Main) {
-                        if (user != null) {
-                            // Redirect the user to the user dashboard
+                mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            // Redirect the admin to the admin dashboard
                             startActivity(
                                 Intent(
                                     this@UniversalLoginActivity,
@@ -78,17 +101,37 @@ class UniversalLoginActivity : AppCompatActivity() {
                                 )
                             )
                             finish()
-                        } else {
-                            // Display an error message if the admin credentials are invalid
-                            Toast.makeText(
-                                this@UniversalLoginActivity,
-                                "Invalid credentials",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
                         }
+                    }.addOnFailureListener {
+                        Toast.makeText(
+                            this, "Sign In Failed $it",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
-                }
+//                GlobalScope.launch(Dispatchers.IO) {
+//                    val user = accountDao.getUserByEmailAndPassword(email, password)
+//                    withContext(Dispatchers.Main) {
+//                        if (user != null) {
+//                            // Redirect the user to the user dashboard
+//                            startActivity(
+//                                Intent(
+//                                    this@UniversalLoginActivity,
+//                                    RedemptionActivity::class.java
+//                                )
+//                            )
+//                            finish()
+//                        } else {
+//                            // Display an error message if the admin credentials are invalid
+//                            Toast.makeText(
+//                                this@UniversalLoginActivity,
+//                                "Invalid credentials",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//
+//                        }
+//                    }
+//                }
 
             }
         }
