@@ -14,4 +14,6 @@ data class Item(
     val itemPrice: Double,
     val itemDescription: String,
     val imageUri: String?
-): Parcelable
+): Parcelable {
+    constructor() : this(0, "", 0.0, "", null)
+}

@@ -60,23 +60,23 @@ class ItemListAdapter(
                 .timeout(6000)
                 .into(itemImageView)
 
-            GlobalScope.launch(Dispatchers.IO) {
-                val ratings = itemDao.getItemRatings(item.id)
-                GlobalScope.launch(Dispatchers.Main) {
-                    if (ratings.isNotEmpty()) {
-                        val averageRating = ratings.map {
-                            it.ratingValue
-                        }.average()
-                        rating.rating = averageRating.toFloat()
-                    } else {
-                        Toast.makeText( 
-                            itemView.context,
-                            "No data",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-            }
+//            GlobalScope.launch(Dispatchers.IO) {
+//                val ratings = itemDao.getItemRatings(item.id)
+//                GlobalScope.launch(Dispatchers.Main) {
+//                    if (ratings.isNotEmpty()) {
+//                        val averageRating = ratings.map {
+//                            it.ratingValue
+//                        }.average()
+//                        rating.rating = averageRating.toFloat()
+//                    } else {
+//                        Toast.makeText(
+//                            itemView.context,
+//                            "No data",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                    }
+//                }
+//            }
 
             redeemTextView.setOnClickListener {
                 val intent = Intent(itemView.context, ItemRedeemActivity::class.java)
